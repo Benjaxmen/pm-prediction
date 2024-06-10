@@ -2,26 +2,26 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, AveragePooling2D, Flatten, Dense, Dropout
 
-def build_model_layer():
+def build_model(input_shape):
     # Crear el modelo secuencial
     model = Sequential()
 
     # Añadir la capa de convolución 2D
-    model.add(Conv2D(filters=16, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+    model.add(Conv2D(filters=16, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 6)))
 
     # Añadir la capa de Average Pooling
     model.add(AveragePooling2D(pool_size=(2, 2)))
     # Añadir la capa de convolución 2D
-    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu'))
 
     # Añadir la capa de Average Pooling
     model.add(AveragePooling2D(pool_size=(2, 2)))
     # Añadir la capa de convolución 2D
-    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu'))
 
     # Añadir la capa de Average Pooling
     model.add(AveragePooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu'))
 
     # Añadir la capa de Average Pooling
     model.add(AveragePooling2D(pool_size=(2, 2)))
@@ -38,3 +38,13 @@ def build_model_layer():
     # Añadir la capa de salida con activación lineal
     model.add(Dense(units=1, activation='linear'))
     return model
+
+# Crear el modelo
+input_shape = (224, 224, 6)
+model = build_model(input_shape)
+
+# Compilar el modelo
+model.compile(optimizer='adam', loss='mean_absolute_error')
+
+# Resumen del modelo
+model.summary()
