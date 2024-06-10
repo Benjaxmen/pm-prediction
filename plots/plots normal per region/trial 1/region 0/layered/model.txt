@@ -1,0 +1,40 @@
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, AveragePooling2D, Flatten, Dense, Dropout
+
+def build_model_layer():
+    # Crear el modelo secuencial
+    model = Sequential()
+
+    # Añadir la capa de convolución 2D
+    model.add(Conv2D(filters=16, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+
+    # Añadir la capa de Average Pooling
+    model.add(AveragePooling2D(pool_size=(2, 2)))
+    # Añadir la capa de convolución 2D
+    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+
+    # Añadir la capa de Average Pooling
+    model.add(AveragePooling2D(pool_size=(2, 2)))
+    # Añadir la capa de convolución 2D
+    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+
+    # Añadir la capa de Average Pooling
+    model.add(AveragePooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(224, 224, 1)))
+
+    # Añadir la capa de Average Pooling
+    model.add(AveragePooling2D(pool_size=(2, 2)))
+
+    # Aplanar la salida de la capa de pooling
+    model.add(Flatten())
+
+    # Añadir una capa densa
+    model.add(Dense(units=128, activation='relu'))
+
+    # Añadir la capa de Dropout
+    model.add(Dropout(rate=0.5))
+
+    # Añadir la capa de salida con activación lineal
+    model.add(Dense(units=1, activation='linear'))
+    return model

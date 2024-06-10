@@ -1,0 +1,37 @@
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+def build_model(input_shape):
+    model = models.Sequential()
+
+    # Capa convolucional
+    model.add(layers.Conv2D(8, (1, 1), activation='relu', input_shape=input_shape))
+    # Capa de pooling
+    model.add(layers.AveragePooling2D((2, 2)))
+
+    # Otras capas convolucionales y de pooling para aumentar la profundidad
+    model.add(layers.Conv2D(8, (1, 1), activation='relu'))
+    model.add(layers.AveragePooling2D((2, 2)))
+
+    model.add(layers.Conv2D(8, (1, 1), activation='relu'))
+    model.add(layers.AveragePooling2D((2, 2)))
+    
+    # Aplanar los datos para alimentar la capa densa
+    model.add(layers.Flatten())
+
+    # Capas densas para la parte final de la red
+    model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dropout(0.5))  # Regularización con dropout
+    model.add(layers.Dense(1, activation='linear'))  # Capa de salida con activación lineal para valores float
+
+    return model
+
+# Crear el modelo
+input_shape = (224, 224, 1)
+model = build_model(input_shape)
+
+# Compilar el modelo
+model.compile(optimizer='adam', loss='mean_absolute_error', metrics=['mse'])
+
+# Resumen del modelo
+model.summary()
